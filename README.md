@@ -1,5 +1,7 @@
 # sql-constraint-checker
 
+Status: _experimental_
+
 Run periodic SQL queries to perform basic sanity checks and ensure data quality. Where constraints are violated, get an example for you to begin debugging with.
 
 ## Overview
