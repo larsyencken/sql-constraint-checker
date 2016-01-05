@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-single">
+<h1 class="slug">{{ check.name }}</h1>
+
+<h2>Status</h2>
+{{ check.status }}
+
+<h2>Description</h2>
+{{ check.description }}
+
+<h2>Prevalence</h2>
+<h4>Query</h4>
+<pre>
+{{ check.query_check }}
+</pre>
+
+<h4>Result</h4>
+<p>{{ check.count }}</p>
+
+<h2>Example</h2>
+
+<h4>Query</h4>
+<pre>
+{{ check.query_example }}
+</pre>
+
+<h4>Result</h4>
+<pre>
+{{ check.example_s }}
+</pre>
+
+<hr class="space" />
+
+<a href="/">Back to results</a>
+</div>
+{% endblock %}

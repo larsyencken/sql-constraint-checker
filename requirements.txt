@@ -1,0 +1,5 @@
+click
+flask
+jsonschema
+mysqlclient
+pyyaml

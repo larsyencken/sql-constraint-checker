@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Constraints</h1>
+<div class="container-table">
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th class="numeric">Count</th>
+      <th class="numeric">Warn</th>
+      <th class="numeric">Alert</th>
+      <th class="numeric">Time</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for check in checks %}
+  <tr>
+    <td class="slug"><a href="/{{ check.name }}/">{{ check.name }}</a></td>
+    <td>{{ check.description }}</td>
+    <td>{{ check.status }}</td>
+    <td class="numeric">{{ check.count }}</td>
+    <td class="numeric">{{ check.warn_s }}</td>
+    <td class="numeric">{{ check.alert_s }}</td>
+    <td class="numeric">{{ check.time_s }}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}

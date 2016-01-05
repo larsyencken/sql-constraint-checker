@@ -1,0 +1,68 @@
+/**
+ * constraints.css
+ */
+
+body {
+  font-family: Lato, Arial, sans-serif;
+  font-size: 110%;
+  margin-top: 3em;
+}
+
+.container-table {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container-single {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 1.5em;
+}
+
+h1 > a {
+  text-decoration: none;
+  color: black;
+}
+
+h3 {
+  padding-top: 20px;
+}
+
+table {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  border-collapse: collapse;
+}
+
+thead {
+  border-bottom: 1px solid black;
+}
+
+tbody > tr:nth-child(odd) {
+  /*background: #f0f0f0;*/
+}
+
+td, th {
+  padding: 5px 10px 5px 10px;
+  text-align: left;
+  vertical-align: top;
+}
+
+td.numeric, th.numeric {
+  text-align: right;
+}
+
+pre {
+  /*text-align: left;*/
+}
+
+hr.space {
+  height: 1em;
+  border: none;
+}
