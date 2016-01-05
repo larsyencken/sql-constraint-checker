@@ -6,6 +6,7 @@
 #
 
 import json
+from collections import defaultdict
 
 import click
 import flask
@@ -41,9 +42,16 @@ class ResultServer(flask.Flask):
         return flask.render_template('single.html', check=checks[name])
 
     def load_checks(self, checks_file):
+        checks = {}
         with open(checks_file) as istream:
-            return {c['name']: c
-                    for c in yaml.safe_load_all(istream)}
+            for c in yaml.safe_load_all(istream):
+                check = defaultdict(lambda: '-')
+                check.update(c)
+
+                checks[check['name']] = check
+
+        return checks
+
 
     def load_results(self):
         checks = self.load_checks(self.checks_file)
@@ -60,35 +68,41 @@ class ResultServer(flask.Flask):
 
     def order_checks(self, checks):
         results = list(checks.values())
-        results.sort(key=lambda r: r['name'])
-        results = ([r for r in results if r['status'] == 'error']
-                   + [r for r in results if r['status'] == 'warning']
-                   + [r for r in results if r['status'] == 'ok'])
+
+        # reorder by status and name
+        ordering = defaultdict(int)
+        ordering['error'] = -3
+        ordering['warning'] = -2
+        ordering['ok'] = -1
+
+        results.sort(key=lambda r: (ordering[r['status']], r['name']))
 
         return results
 
     def markup_checks(self, checks):
         for c in checks.values():
-            c['time_s'] = '{:.0f}'.format(c['time'])
+            print(c['name'])
+
+            if 'time' in c:
+                c['time_s'] = '{:.0f}'.format(c['time'])
 
             if 'warn_above' in c:
                 c['warn_s'] = '>{}'.format(c['warn_above'])
             elif 'warn_below' in c:
                 c['warn_s'] = '<{}'.format(c['warn_above'])
-            else:
-                c['warn_s'] = '-'
 
             if 'alert_above' in c:
                 c['alert_s'] = '>{}'.format(c['alert_above'])
             elif 'alert_below' in c:
                 c['alert_s'] = '<{}'.format(c['alert_above'])
-            else:
-                c['alert_s'] = '-'
 
-            c['status'] = self.determine_status(c)
-            c['example_s'] = json.dumps(c['example'],
-                                        indent=2,
-                                        sort_keys=True)
+            if 'count' in c:
+                c['status'] = self.determine_status(c)
+
+            if 'example' in c:
+                c['example_s'] = json.dumps(c['example'],
+                                            indent=2,
+                                            sort_keys=True)
 
     def determine_status(self, check):
         count = check['count']
