@@ -29,3 +29,6 @@ poll: poll.py db.yml checks.yml
 
 serve: checks.yml
 	env/bin/python serve.py checks.yml output.json
+
+view:
+	open http://127.0.0.1:5000/
