@@ -5,6 +5,7 @@
 #  sql-sanity-checker
 #
 
+import os
 import json
 from collections import defaultdict
 
@@ -56,8 +57,11 @@ class ResultServer(flask.Flask):
     def load_results(self):
         checks = self.load_checks(self.checks_file)
 
-        with open(self.results_file) as istream:
-            results = json.load(istream)
+        if os.path.exists(self.results_file):
+            with open(self.results_file) as istream:
+                results = json.load(istream)
+        else:
+            results = []
 
         for r in results:
             checks[r['name']].update(r)
