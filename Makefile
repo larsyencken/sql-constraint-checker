@@ -7,6 +7,7 @@
 help:
 	@echo 'Available commands:'
 	@echo
+	@echo '  make env     Install required packages.'
 	@echo '  make serve   Run the development server.'
 	@echo '  make view    Open a browser to the developement URI.'
 	@echo '  make poll    Run queries against the database.'
