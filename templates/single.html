@@ -5,10 +5,10 @@
 <h1 class="slug">{{ check.name }}</h1>
 
 <h2>Status</h2>
-{{ check.status }}
+<p class="indent1">{{ check.status }}</p>
 
 <h2>Description</h2>
-{{ check.description }}
+<p class="indent1">{{ check.description }}</p>
 
 <h2>Prevalence</h2>
 <h4>Query</h4>
@@ -17,7 +17,7 @@
 {% endhighlight %}
 
 <h4>Result</h4>
-<p>{{ check.count }}</p>
+<p class="indent2">{{ check.count }}</p>
 
 <h2>Example</h2>
 
@@ -27,9 +27,9 @@
 {% endhighlight %}
 
 <h4>Result</h4>
-<pre>
+{% highlight 'json' %}
 {{ check.example_s }}
-</pre>
+{% endhighlight %}
 
 <hr class="space" />
 
