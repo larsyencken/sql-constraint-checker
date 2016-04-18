@@ -12,6 +12,7 @@ from collections import defaultdict
 import click
 import flask
 import yaml
+import jinja2_highlight  # noqa
 
 
 @click.command()
@@ -23,6 +24,11 @@ def serve(checks_file, results_file):
 
 
 class ResultServer(flask.Flask):
+    jinja_options = dict(flask.Flask.jinja_options)
+    jinja_options.setdefault('extensions', []).append(
+        'jinja2_highlight.HighlightExtension'
+    )
+
     def __init__(self, checks_file, results_file):
         super().__init__('sql-sanity-checker')
         self.checks_file = checks_file
@@ -52,7 +58,6 @@ class ResultServer(flask.Flask):
                 checks[check['name']] = check
 
         return checks
-
 
     def load_results(self):
         checks = self.load_checks(self.checks_file)

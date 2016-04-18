@@ -59,7 +59,7 @@ td.numeric, th.numeric {
 }
 
 pre {
-  /*text-align: left;*/
+  padding-left: 2em;
 }
 
 hr.space {
