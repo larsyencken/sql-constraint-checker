@@ -10,6 +10,7 @@ import json
 import time
 from collections import namedtuple
 import datetime as dt
+import decimal
 
 import click
 import jsonschema
@@ -121,6 +122,9 @@ def json_sanitize(o):
 
     elif isinstance(o, dt.date):
         return str(o)
+
+    elif isinstance(o, decimal.Decimal):
+        return float(o)
 
     return o
 
