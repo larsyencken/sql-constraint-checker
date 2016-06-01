@@ -98,12 +98,12 @@ class ResultServer(flask.Flask):
             if 'warn_above' in c:
                 c['warn_s'] = '>{}'.format(c['warn_above'])
             elif 'warn_below' in c:
-                c['warn_s'] = '<{}'.format(c['warn_above'])
+                c['warn_s'] = '<{}'.format(c['warn_below'])
 
             if 'alert_above' in c:
                 c['alert_s'] = '>{}'.format(c['alert_above'])
             elif 'alert_below' in c:
-                c['alert_s'] = '<{}'.format(c['alert_above'])
+                c['alert_s'] = '<{}'.format(c['alert_below'])
 
             if 'count' in c:
                 c['status'] = self.determine_status(c)
