@@ -4,3 +4,4 @@ jsonschema
 mysqlclient
 pyyaml
 jinja2-highlight
+structlog

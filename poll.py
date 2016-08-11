@@ -11,15 +11,21 @@ import time
 from collections import namedtuple
 import datetime as dt
 import decimal
+import uuid
 
 import click
 import jsonschema
 import yaml
 import MySQLdb
 import MySQLdb.cursors
-
+import structlog
 
 CHECK_SCHEMA = pathlib.Path(__file__).parent / 'schemas' / 'check.json'
+
+structlog.configure(
+    processors=[structlog.processors.JSONRenderer(sort_keys=True)]
+)
+LOG = structlog.get_logger()
 
 
 @click.command()
@@ -65,17 +71,16 @@ def dump_results(results, output_file):
 
 
 def run_checks(checks, conn):
-    print('RUNNING CHECKS')
+    batch = LOG.bind(batch_id=str(uuid.uuid1()),
+                     batch_timestamp=dt.datetime.now().isoformat())
     results = []
 
     with conn.cursor() as cursor:
         for check in checks:
-            print(check['name'] + '...')
+            batch.msg(event='run-check', name=check['name'])
             check_result = run_check(check, cursor)
             result = assemble_result(check, check_result)
             results.append(result)
-
-    print('DONE')
 
     return results
 
