@@ -69,7 +69,11 @@ class ResultServer(flask.Flask):
             results = []
 
         for r in results:
-            checks[r['name']].update(r)
+            name = r['name']
+
+            # ignore results for checks that aren't in our config
+            if name in checks:
+                checks[name].update(r)
 
         self.markup_checks(checks)
 
