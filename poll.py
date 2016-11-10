@@ -32,12 +32,19 @@ LOG = structlog.get_logger()
 @click.argument('config_file')
 @click.argument('checks_file')
 @click.argument('output_file')
-def poll(config_file, checks_file, output_file):
+@click.option('--last', is_flag=True,
+              help='Only run the very last check in the file. Useful for development.')
+def poll(config_file, checks_file, output_file, last=False):
     """
     Regenerate the output file by running the given checks against the
     database specified in our config.
     """
     checks = load_checks(checks_file)
+
+    if last and checks:
+        # only look at the last check
+        checks = [checks[-1]]
+
     conn = connect_to_db(config_file)
     results = run_checks(checks, conn)
     dump_results(results, output_file)

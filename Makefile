@@ -29,6 +29,9 @@ checks.yml:
 poll: poll.py db.yml checks.yml
 	env/bin/python $< db.yml checks.yml output.json
 
+poll-last: poll.py db.yml checks.yml
+	env/bin/python $< --last db.yml checks.yml output.json
+
 serve: checks.yml
 	env/bin/python serve.py checks.yml output.json
 
