@@ -72,7 +72,7 @@ def load_checks(checks_file):
 
 
 def dump_results(results, output_file):
-    output = json.dumps(results)
+    output = json.dumps(json_sanitize(results))
     with open(output_file, 'w') as ostream:
         print(output, file=ostream)
 
@@ -120,7 +120,7 @@ def assemble_result(check, check_result):
         'name': check['name'],
         'count': check_result.count,
         'time': check_result.time,
-        'example': json_sanitize(check_result.example),
+        'example': check_result.example,
     }
 
 
